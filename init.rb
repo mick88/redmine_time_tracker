@@ -1,8 +1,14 @@
 # encoding: utf-8
 Rails.logger.info 'Starting Time Tracker plugin for RedMine'
-ActiveSupport::Dependencies.autoload_paths << File.join(File.dirname(__FILE__), 'app/concerns')
+
+
+# Add lib to load path
+lib_path = File.join(File.dirname(__FILE__), 'lib')
+$LOAD_PATH.unshift lib_path
 
 require 'redmine'
+
+
 
 require 'tt_user_patch'
 require 'tt_project_patch'

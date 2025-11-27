@@ -1,6 +1,6 @@
 require_dependency 'context_menus_controller'
 
-module TtContextMenusControllerControllerPatch
+module TtContextMenusControllerPatch
   def tt_overview
     entryClass = params[:entryClass] # specify either a TimeLog- or TimeBooking- ContextMenu was activated
 
@@ -28,5 +28,5 @@ module TtContextMenusControllerControllerPatch
 end
 
 class ContextMenusController
-  include TtContextMenusControllerControllerPatch
+  include TtContextMenusControllerPatch
 end
