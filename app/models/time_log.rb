@@ -1,9 +1,9 @@
 require 'redmine/i18n'
 class TimeLog < ActiveRecord::Base
   include Redmine::I18n
-  unloadable
 
-  attr_accessible :user_id, :started_on, :stopped_at, :project_id, :comments, :issue_id, :spent_time, :bookable
+
+
   attr_accessor :issue_id, :spent_time
   belongs_to :user
   has_many :time_bookings, :dependent => :delete_all

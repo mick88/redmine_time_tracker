@@ -1,8 +1,8 @@
 class TimeLogsController < ApplicationController
-  unloadable
+
 
   menu_item :time_tracker_menu_tab_logs
-  before_filter :authorize_global
+  before_action :authorize_global
 
   helper :queries
   include QueriesHelper
@@ -100,7 +100,7 @@ class TimeLogsController < ApplicationController
     hours = time_string2hour(tl[:spent_time])
     stop = start + hours.hours
 
-    time_log.update_attributes!(:started_on => start, :stopped_at => stop, :comments => tl[:comments])
+    time_log.update!(:started_on => start, :stopped_at => stop, :comments => tl[:comments])
     flash[:notice] = l(:tt_update_log_success)
   rescue StandardError => e
     flash[:error] = e.message

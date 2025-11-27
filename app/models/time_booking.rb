@@ -1,9 +1,9 @@
 require 'redmine/i18n'
 class TimeBooking < ActiveRecord::Base
   include Redmine::I18n
-  unloadable
 
-  attr_accessible :started_on, :stopped_at, :time_entry_id, :time_log_id, :project, :project_id
+
+
   belongs_to :project
   belongs_to :time_log
   belongs_to :time_entry, :dependent => :delete
@@ -111,13 +111,13 @@ class TimeBooking < ActiveRecord::Base
       if issue.project != self.project
         # if the new issue is part of another project we first have to nullify the issue, change the project and than set
         # the new issue_id otherwise updating the redmine time_entry will fail
-        self.time_entry.update_attributes! :issue => nil
+        self.time_entry.update! :issue => nil
         self.project = issue.project
       end
     end
     # workaround to get dirty-flag working even for associated fields!
     @changed_attributes['issue'] = self.issue unless issue == self.issue
-    self.time_entry.update_attributes! :issue => issue #also update TimeEntry
+    self.time_entry.update! :issue => issue #also update TimeEntry
   end
 
   def issue
@@ -157,7 +157,7 @@ class TimeBooking < ActiveRecord::Base
       end
     end
     write_attribute(:project_id, project.id)
-    self.time_entry.update_attributes! :project => project #also update TimeEntry
+    self.time_entry.update! :project => project #also update TimeEntry
   end
 
   # this method is necessary to change start and stop at the same time without leaving boundaries
@@ -168,7 +168,7 @@ class TimeBooking < ActiveRecord::Base
 
     write_attribute(:started_on, start)
     write_attribute(:stopped_at, stop)
-    self.time_entry.update_attributes!(:spent_on => start, :hours => self.hours_spent) #also update TimeEntry
+    self.time_entry.update!(:spent_on => start, :hours => self.hours_spent) #also update TimeEntry
   end
 
   def user_id
@@ -182,7 +182,7 @@ class TimeBooking < ActiveRecord::Base
   def activity_id=(activity_id)
     # workaround to get dirty-flag working even for associated fields!
     @changed_attributes['activity_id'] = self.activity_id unless activity_id == self.activity_id
-    self.time_entry.update_attributes! :activity_id => activity_id
+    self.time_entry.update! :activity_id => activity_id
   end
 
   # following methods are necessary to use the query_patch, so we can use the powerful filter options of redmine
@@ -195,7 +195,7 @@ class TimeBooking < ActiveRecord::Base
   def comments=(comments)
     # workaround to get dirty-flag working even for associated fields!
     @changed_attributes['comments'] = self.comments unless comments == self.comments
-    self.time_entry.update_attributes! :comments => comments
+    self.time_entry.update! :comments => comments
   end
 
   def tt_booking_date

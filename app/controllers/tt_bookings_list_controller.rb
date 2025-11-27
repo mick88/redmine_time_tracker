@@ -1,8 +1,8 @@
 class TtBookingsListController < ApplicationController
-  unloadable
+
 
   menu_item :time_tracker_menu_tab_bookings_list
-  before_filter :authorize_global, :check_settings_for_ajax
+  before_action :authorize_global, :check_settings_for_ajax
 
   helper :issues
   include IssuesHelper

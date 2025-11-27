@@ -1,8 +1,8 @@
 class TtInfoController < ApplicationController
-  unloadable
+
 
   menu_item :time_tracker_menu_tab_active_trackers
-  before_filter :authorize_global, :check_settings_for_ajax
+  before_action :authorize_global, :check_settings_for_ajax
 
   def index
     if User.current.allowed_to?(:view_others_time_trackers, nil, :global => true) || User.current.admin?

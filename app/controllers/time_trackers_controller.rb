@@ -1,9 +1,9 @@
 class TimeTrackersController < ApplicationController
-  unloadable
+
 
   menu_item :time_tracker_menu_tab_overview
-  before_filter :js_auth, :authorize_global
-  around_filter :error_handling, :only => [:stop, :start]
+  before_action :js_auth, :authorize_global
+  around_action :error_handling, :only => [:stop, :start]
   accept_api_auth :update
 
   helper :time_trackers
@@ -101,7 +101,7 @@ class TimeTrackersController < ApplicationController
 
   def update
     @time_tracker = get_current
-    @time_tracker.update_attributes!(params[:time_tracker])
+    @time_tracker.update!(time_tracker_params)
     flash[:notice] = l(:update_time_tracker_success)
     unless request.xhr?
       redirect_to :back
@@ -151,5 +151,9 @@ class TimeTrackersController < ApplicationController
       format.json { User.current = User.where(:id => session[:user_id]).first }
       format.any {}
     end
+  end
+
+  def time_tracker_params
+    params.require(:time_tracker).permit(:comments, :issue_id, :issue_text, :project_id, :start_time, :date, :round, :activity_id)
   end
 end

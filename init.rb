@@ -27,7 +27,7 @@ Redmine::Plugin.register :redmine_time_tracker do
   description 'Keep track of all the time. Associate it at your will. Create and print custom reports.'
   version '0.9.8'
 
-  requires_redmine :version_or_higher => '2.4.0'
+  requires_redmine :version_or_higher => '5.0.0'
 
   #settings :default => {:refresh_rate => '60', :status_transitions => {}}, :partial => 'settings/time_tracker'
   settings :default => {:report_title => 'Report', :report_logo_url => '', :report_logo_width => '150', :round_steps => '0.25', :round_limit => '50', :round_default => false}, :partial => 'settings/time_tracker'
